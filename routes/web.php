@@ -20,12 +20,13 @@ Route::get('/', function () {
 });
 
 // << Custom routes
+Route::middleware(['guest'])->group(function () {
+    Route::resource('boardgames', BoardgameController::class)->except(['index', 'show']);
+});
+
 Route::get('/boardgames', [BoardgameController::class, 'index'])->name('boardgames.index');
 Route::get('/boardgames/{boardgame:slug}', [BoardgameController::class, 'show'])->name('boardgames.show');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('boardgames', BoardgameController::class)->except(['index', 'show']);
-});
 // >>
 
 Route::get('/dashboard', function () {

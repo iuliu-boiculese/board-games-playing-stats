@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->string('thumbnail');
-            $table->year('released_year');
+            $table->year('release_year');
             $table->string('bgg_url')->nullable()->comment('BoardGameGeek.com');
             $table->timestamps();
             $table->softDeletes();
