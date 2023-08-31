@@ -13,8 +13,8 @@
     <!-- Styles -->
     @vite('resources/css/app.css')
 </head>
-<body class="font-sans dark:text-gray-400 antialiased">
-    <div class="flex-col relative sm:flex min-h-screen bg-dots-darker bg-center bg-gray-100 dark dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+<body class="font-sans dark:text-gray-400 bg-dots-darker bg-center bg-gray-100 dark dark:bg-gray-900 antialiased">
+    <div class="flex-col relative sm:flex min-h-screen">
         @if (Route::has('login'))
             <div class="sm:top-0 sm:right-0 p-6 text-right">
                 @auth
@@ -29,9 +29,10 @@
             </div>
         @endif
 
-        <div class="p-6 w-11/12 mx-auto">
+        <div class="p-6 w-11/12 mx-auto ">
             {{ $slot }}
         </div>
+
     </div>
 </body>
 </html>

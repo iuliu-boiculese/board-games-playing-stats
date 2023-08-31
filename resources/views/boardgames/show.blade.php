@@ -2,12 +2,12 @@
     <div class="flex flex-wrap">
         <div class="pr-5">
             <div>
-                <img alt="" src="{{ asset('storage/thumbnails/' . $boardgame->thumbnail)}}"/>
+                <img alt="" src="{{ asset('storage/' . $boardgame->thumbnail)}}"/>
             </div>
-            <div class="p-4">
+            <div class="py-4">
                 <p><b>Title:</b> {{$boardgame->name}}</p>
                 <p><b>Description: </b>{{$boardgame->description}}</p>
-                <p><b>Year:</b> {{$boardgame->released_year}}</p>
+                <p><b>Year:</b> {{$boardgame->release_year}}</p>
             </div>
         </div>
         <div>
