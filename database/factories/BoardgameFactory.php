@@ -21,7 +21,7 @@ class BoardgameFactory extends Factory
             'description' => fake()->sentence(),
             'slug' => fake()->slug(),
             'release_year' => fake()->year(),
-            'thumbnail' => fake()->image(storage_path('app/public/thumbnails'), 100, 100, null, false),
+            'image' => fake()->image(storage_path('app/public/boardgames/thumbnails'), 100, 100, null, false),
             'bgg_url' => fake()->url()
         ];
 
