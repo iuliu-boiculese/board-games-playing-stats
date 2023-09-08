@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('boardgames', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('thumbnail');
+            $table->string('image');
             $table->year('release_year');
             $table->string('bgg_url')->nullable()->comment('BoardGameGeek.com');
             $table->timestamps();

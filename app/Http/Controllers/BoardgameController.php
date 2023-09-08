@@ -6,6 +6,7 @@ use App\Models\Boardgame;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
 
 class BoardgameController extends Controller
 {
@@ -27,27 +28,40 @@ class BoardgameController extends Controller
 
     public function store(Request $request)
     {
-        $request->merge(['slug' => Str::slug($request->name)]);
-        Boardgame::create(array_merge($this->validateBoardgame(), [
-            'thumbnail' => $request->file('thumbnail')->store('thumbnails')
-        ]));
+        // Validation
+        $validatedFields = $this->validateBoardgame();
+        $validatedFields['slug'] = Str::slug($request->name);
+        $validatedFields['image'] = $this->saveImage($request);
 
-        return redirect('/boardgames');
+        Boardgame::create($validatedFields);
+
+        return redirect('/boardgames')->with('success', 'Boardgame added');
     }
 
-    public function edit()
+    public function edit(Boardgame $boardgame)
     {
-
+        return view('boardgames.edit', ['boardgame' => $boardgame]);
     }
 
-    public function update()
+    public function update(Request $request, Boardgame $boardgame)
     {
+        $validatedFields = $this->validateBoardgame($boardgame);
+        $validatedFields['slug'] = Str::slug($request->name);
 
+        if ($validatedFields['image'] ?? false) {
+            $validatedFields['image'] = $this->saveImage($request);
+        }
+
+        $boardgame->update($validatedFields);
+
+        return redirect('/boardgames')->with('success', 'Boardgame updated');
     }
 
-    public function destroy()
+    public function destroy(Boardgame $boardgame)
     {
+        $boardgame->delete();
 
+        return back()->with('success', 'Post Deleted!');
     }
 
     protected function validateBoardgame(?Boardgame $boardgame = null): array
@@ -55,13 +69,30 @@ class BoardgameController extends Controller
         $boardgame ??= new Boardgame();
 
         return request()->validate([
-            'name' => 'required|max:255',
-            'slug' => ['required', Rule::unique('boardgames', 'slug')->ignore($boardgame), 'max:255'],
+            'name' => ['required', Rule::unique('boardgames', 'name')->ignore($boardgame), 'max:255'],
             'description' => 'nullable',
-            'thumbnail' => $boardgame->exists ? ['image'] : ['required', 'image'],
+            'image' => $boardgame->exists ? ['image'] : ['required', 'image'],
             'release_year' => 'required|digits:4|integer|min:1900|max:' . (date('Y')),
-            'bgg_url' => 'url:https|nullable'
+            'bgg_url' => 'url:https|nullable|max:255'
         ]);
 
+    }
+
+    protected function saveImage(Request $request): string
+    {
+        $image = $request->file('image');
+        $imageName = $image->hashName();
+
+        $destinationPathThumbnail = storage_path('app/public/boardgames/thumbnails');
+        $img = Image::make($image->path());
+
+        $img->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPathThumbnail.'/'.$imageName);
+
+        $destinationPathOriginal = storage_path('app/public/boardgames/originals');
+        $image->move($destinationPathOriginal, $imageName);
+
+        return $imageName;
     }
 }

@@ -21,12 +21,8 @@ Route::get('/', function () {
 
 // << Custom routes
 Route::middleware(['guest'])->group(function () {
-    Route::resource('boardgames', BoardgameController::class)->except(['index', 'show']);
+    Route::resource('boardgames', BoardgameController::class);
 });
-
-Route::get('/boardgames', [BoardgameController::class, 'index'])->name('boardgames.index');
-Route::get('/boardgames/{boardgame:slug}', [BoardgameController::class, 'show'])->name('boardgames.show');
-
 // >>
 
 Route::get('/dashboard', function () {
