@@ -61,7 +61,7 @@ class BoardgameController extends Controller
     {
         $boardgame->delete();
 
-        return back()->with('success', 'Post Deleted!');
+        return back()->with('success', 'Boardgame deleted!');
     }
 
     protected function validateBoardgame(?Boardgame $boardgame = null): array

@@ -1,5 +1,7 @@
 <x-main-layout>
-    <h1 class="mb-4 font-bold text-4xl">All Boardgames</h1>
+    <x-slot:header>
+        {{__('All Boardgames')}}
+    </x-slot:header>
     <div class="flex flex-wrap gap-x-6 gap-y-6">
         @foreach($boardgames as $key => $boardgame)
             <div class="flex flex-col w-64 border border-1 border-gray-700 rounded-lg">
