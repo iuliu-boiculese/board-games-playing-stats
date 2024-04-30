@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Boardgame::truncate();
-        Boardgame::factory(11)->create();
+        Boardgame::factory(10)->create();
     }
 }

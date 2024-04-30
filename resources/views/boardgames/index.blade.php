@@ -1,18 +1,24 @@
 <x-main-layout>
+
     <x-slot:header>
         {{__('All Boardgames')}}
     </x-slot:header>
+
+    <x-slot:actions>
+        <x-link href="/boardgames/create">{{__('Add New Boardgame')}}</x-link>
+    </x-slot:actions>
+
     <div class="flex flex-wrap gap-x-6 gap-y-6">
         @foreach($boardgames as $key => $boardgame)
-            <div class="flex flex-col w-64 border border-1 border-gray-700 rounded-lg">
+            <div class="flex flex-col justify-between w-64 border border-1 border-gray-700 rounded-lg">
                 <a href="/boardgames/{{$boardgame->slug}}">
-                    <div class="p-4 h-24">
-                        <img alt="" src="{{ asset('storage/boardgames/thumbnails/' . $boardgame->image)}}"/>
-                    </div>
                     <div class="p-4">
-                        <p><b>Title:</b> {{$boardgame->name}}</p>
-                        <p><b>Description: </b>{{$boardgame->description}}</p>
-                        <p><b>Year:</b> {{$boardgame->release_year}}</p>
+                        <img class="rounded-lg" alt="" src="{{ asset('storage/boardgames/thumbnails/' . $boardgame->image)}}"/>
+                    </div>
+                    <div class="flex flex-col p-4">
+                        <p><b class="text-sky-800">{{__('Title')}}:</b> {{$boardgame->name}}</p>
+                        <p><b class="text-sky-800">{{__('Description')}}: </b>{{$boardgame->description}}</p>
+                        <p><b class="text-sky-800">{{__('Release Year')}}:</b> {{$boardgame->release_year}}</p>
                     </div>
                 </a>
                 <div class="flex p-4">
@@ -47,5 +53,7 @@
             </div>
         @endforeach
     </div>
+
+    <div>{{ $boardgames->links() }}</div>
 
 </x-main-layout>

@@ -12,7 +12,7 @@ class BoardgameController extends Controller
 {
     public function index()
     {
-        $boardgames = Boardgame::all()->sortBy('name');
+        $boardgames = Boardgame::orderBy('name')->paginate(12);
         return view('boardgames.index', ['boardgames' => $boardgames]);
     }
 
