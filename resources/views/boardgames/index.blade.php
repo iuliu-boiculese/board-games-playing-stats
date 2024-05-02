@@ -21,14 +21,14 @@
                         <p><b class="text-sky-800">{{__('Release Year')}}:</b> {{$boardgame->release_year}}</p>
                     </div>
                 </a>
-                <div class="flex p-4">
-                    <x-link href="/boardgames/{{$boardgame->slug}}/edit" class="mr-2">
-                        {{ __('Edit') }}
-                    </x-link>
-                    <x-danger-button x-data=""
+                <div class="flex p-4 justify-end">
+                    <a href="/boardgames/{{$boardgame->slug}}/edit" title="{{ __('Edit') }}" class="mr-2">
+                        <x-heroicon-o-pencil class="text-green-500"/>
+                    </a>
+                    <a href="" title="{{ __('Remove') }}" x-data=""
                                      x-on:click.prevent="$dispatch('open-modal', 'confirm-boardgame-deletion-{{$key}}')">
-                        {{ __('Delete') }}
-                    </x-danger-button>
+                        <x-heroicon-o-trash class="text-red-500"/>
+                    </a>
                 </div>
                 <x-modal name="confirm-boardgame-deletion-{{$key}}" :show="false">
                     <form method="post" action="/boardgames/{{$boardgame->slug}}" class="p-6">
@@ -36,7 +36,7 @@
                         @method('delete')
 
                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                            {!! __("Are you sure you want to delete the boardgame :boardgame", ['boardgame' => "<i>$boardgame->name</i>"]) !!}
+                            {!! __("Are you sure you want to remove the boardgame :boardgame", ['boardgame' => "<i>$boardgame->name</i>"]) !!}
                         </h2>
 
                         <div class="mt-6 flex justify-end">
