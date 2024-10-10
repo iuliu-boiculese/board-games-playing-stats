@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Boardgame::truncate();
-        Boardgame::factory(10)->create();
+       // Boardgame::truncate();
+       // Boardgame::factory(10)->create();
+        $this->call([RolePermissionSeeder::class, UserSeeder::class]);
     }
 }
