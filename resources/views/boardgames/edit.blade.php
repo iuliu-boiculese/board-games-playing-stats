@@ -36,14 +36,14 @@
             <div class="mt-4">
                 <x-input-label for="release_year" :value="__('Release Year')"/>
                 <x-text-input name="release_year" id="release_year" type="number" min="1900" max="{{ now()->year }}"
-                              :value="old('name', $boardgame->release_year)" required/>
+                              :value="old('release_year', $boardgame->release_year)" required/>
                 <x-input-error :messages="$errors->get('release_year')" class="mt-2"/>
             </div>
 
             <div class="mt-4">
                 <x-input-label for="bgg_url" :value="__('BoardGameGeek URL')"/>
                 <x-text-input name="bgg_url" id="bgg_url" type="url" maxlength="255"
-                              :value="old('name', $boardgame->bgg_url)"/>
+                              :value="old('bgg_url', $boardgame->bgg_url)"/>
                 <x-input-error :messages="$errors->get('bgg_url')" class="mt-2"/>
             </div>
 
