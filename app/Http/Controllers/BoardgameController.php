@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Boardgame;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
@@ -23,11 +24,13 @@ class BoardgameController extends Controller
 
     public function create()
     {
+        Gate::authorize('create', Boardgame::class);
         return view('boardgames.create');
     }
 
     public function store(Request $request)
     {
+        Gate::authorize('create', Boardgame::class);
         // Validation
         $validatedFields = $this->validateBoardgame();
         $validatedFields['slug'] = Str::slug($request->name);
@@ -40,11 +43,13 @@ class BoardgameController extends Controller
 
     public function edit(Boardgame $boardgame)
     {
+        Gate::authorize('update', $boardgame);
         return view('boardgames.edit', ['boardgame' => $boardgame]);
     }
 
     public function update(Request $request, Boardgame $boardgame)
     {
+        Gate::authorize('update', $boardgame);
         $validatedFields = $this->validateBoardgame($boardgame);
         $validatedFields['slug'] = Str::slug($request->name);
 
@@ -59,6 +64,7 @@ class BoardgameController extends Controller
 
     public function destroy(Boardgame $boardgame)
     {
+        Gate::authorize('delete', $boardgame);
         $boardgame->delete();
 
         return back()->with('success', 'Boardgame deleted!');
